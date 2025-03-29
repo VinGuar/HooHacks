@@ -1,20 +1,13 @@
-import { Tabs } from "expo-router";
-import { Ionicons } from '@expo/vector-icons';
+import { Tabs } from 'expo-router';
+import CustomTabBar from '../components/CustomTabBar';
 
 export default function Layout() {
   return (
-    <Tabs>
-      <Tabs.Screen
-        name="home"
-        options={{
-          title: "Home",
-          tabBarIcon: ({ color, size }) => <Ionicons name="home" color={'blue'} size={10} />,
-  }}
-/>
-      <Tabs.Screen name="survivortips" options={{ title: 'Survivor Tips' }} />
-      <Tabs.Screen name="firstaid" options={{ title: 'First Aid' }} />
-      <Tabs.Screen name="compass" options={{ title: 'Compass' }} />
-      <Tabs.Screen name="settings" options={{ title: 'Settings' }} />
+    <Tabs tabBar={(props) => <CustomTabBar {...props} />}>
+      <Tabs.Screen name="survivorTipsPage" options={{ title: "Tips" }} />
+      <Tabs.Screen name="index" options={{ title: "Quiz" }} />
+      <Tabs.Screen name="animalLogPage" options={{ title: "Animal Log" }} />
+      <Tabs.Screen name="compassPage" options={{ title: "Compass" }} />
     </Tabs>
   );
 }

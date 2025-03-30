@@ -50,6 +50,36 @@ export default function SurvivorTipsScreen() {
             - **Poisonous**: Bright-colored mushrooms, milky sap plants, bitter-tasting leaves.
           </Text>
         </View>
+
+        {/* CPR */}
+        <View style={{ marginBottom: 20, width: '90%' }}>
+          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>❤️‍🩹 CPR</Text>
+          <Text style={{ textAlign: 'center' }}>
+            - CPR: 30 chest compressions, 2 breaths. Repeat until help arrives.{"\n"}
+          </Text>
+        </View>
+
+        {/* Bleeding */}
+        <View style={{ marginBottom: 20, width: '90%' }}>
+          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>🩸 Bleeding</Text>
+          <Text style={{ textAlign: 'center' }}>
+            - Bleeding: Apply direct pressure, elevate, and bandage.{"\n"}
+          </Text>
+        </View>
+        {/* Sprains */}
+        <View style={{ marginBottom: 20, width: '90%' }}>
+          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>🦶 Sprains</Text>
+          <Text style={{ textAlign: 'center' }}>
+            - Sprains: Rest, Ice, Compression, Elevation (RICE method).
+          </Text>
+        </View>
+        {/* Sprains */}
+        <View style={{ marginBottom: 20, width: '90%' }}>
+          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>🦶 Sprains</Text>
+          <Text style={{ textAlign: 'center' }}>
+            - Sprains: Rest, Ice, Compression, Elevation (RICE method).
+          </Text>
+        </View>
       </ScrollView>
     </View>
   );

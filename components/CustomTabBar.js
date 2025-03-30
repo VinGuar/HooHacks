@@ -48,7 +48,7 @@ export default function CustomTabBar({ state, descriptors, navigation }) {
             router.push(`/${routeName}`);
           }
         };
-
+ 
         
         const iconName = tabIcons[routeName];
         const label = descriptors[route.key]?.options?.title || routeName;

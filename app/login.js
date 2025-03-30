@@ -22,7 +22,7 @@ export default function LoginScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
+      <Text style={styles.title}>Login! (must log in to use.)</Text>
       {error !== '' && <Text style={styles.error}>{error}</Text>}
       <TextInput
         placeholder="Email"

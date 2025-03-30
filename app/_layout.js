@@ -36,7 +36,13 @@ export default function RootLayout() {
   if (checkingAuth) return null; 
 
   return (
-    <Tabs tabBar={(props) => <CustomTabBar {...props} />}>
+    
+    <Tabs 
+      screenOptions={{
+        headerShown: false, 
+      }}
+      
+      tabBar={(props) => <CustomTabBar {...props} />}>
        <Tabs.Screen name="survivortips" options={{ title: "Tips" }} />
       <Tabs.Screen name="compass" options={{ title: "Compass" }} />
     

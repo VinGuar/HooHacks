@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Platform } from 'react-native';
+import { View, Text, StyleSheet, Platform, ImageBackground } from 'react-native';
 import { Magnetometer, Accelerometer } from 'expo-sensors';
 import * as Location from 'expo-location';
 
@@ -80,40 +80,66 @@ export default function CompassPage() {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>🧭 Compass: {heading}°</Text>
-      {location && (
-        <>
-          <Text style={styles.coord}>
-            📍 Lat: {location.latitude.toFixed(4)}, Lon: {location.longitude.toFixed(4)}
-          </Text>
-          <Text style={styles.addr}>🏠 {address}</Text>
-        </>
-      )}
-    </View>
+    <ImageBackground
+      source={require('../assets/images/Forest.jpg')}
+      style={styles.background}
+      imageStyle={{ opacity: 0.3 }}
+    >
+      <View style={styles.container}>
+        <View style={styles.headingBox}>
+          <Text style={styles.heading}>🧭 Compass: {heading}°</Text>
+        </View>
+        {location && (
+          <>
+            <Text style={styles.coord}>
+              📍 Lat: {location.latitude.toFixed(4)}, Lon: {location.longitude.toFixed(4)}
+            </Text>
+            <Text style={styles.addr}>🏠 {address}</Text>
+          </>
+        )}
+      </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+  },
   container: {
     flex: 1,
-    backgroundColor: '#0d1b2a',
+    padding: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
+  },
+  headingBox: {
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    paddingVertical: 14,
+    paddingHorizontal: 20,
+    borderRadius: 12,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOpacity: 0.4,
+    shadowOffset: { width: 0, height: 3 },
+    shadowRadius: 6,
+    elevation: 5,
   },
   heading: {
     fontSize: 32,
     color: '#fff',
-    marginBottom: 20,
+    textAlign: 'center',
   },
   coord: {
     fontSize: 18,
-    color: '#c0d6df',
+    color: '#e9edc9',
     marginBottom: 10,
+    textAlign: 'center',
   },
   addr: {
     fontSize: 18,
-    color: '#c0d6df',
+    color: '#e9edc9',
+    textAlign: 'center',
   },
 });

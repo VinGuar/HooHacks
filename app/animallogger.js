@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import {
-  View, Text, TextInput, Button, FlatList, StyleSheet,
+  View, Text, TextInput, FlatList, StyleSheet,
   TouchableOpacity, KeyboardAvoidingView, Platform,
-  TouchableWithoutFeedback, Keyboard
+  TouchableWithoutFeedback, Keyboard, ImageBackground
 } from 'react-native';
 import { collection, addDoc, query, where, onSnapshot } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -16,7 +16,6 @@ export default function AnimalLoggerScreen() {
   const [user, setUser] = useState(null);
   const router = useRouter();
 
-  // Listen for live auth updates
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       console.log('🔄 Auth state changed. Current user:', firebaseUser?.email || 'None');
@@ -25,10 +24,9 @@ export default function AnimalLoggerScreen() {
     return unsubscribe;
   }, []);
 
-  // Fetch Firestore logs for logged-in user
   useEffect(() => {
     if (!user) {
-      setLogs([]); // reset when logged out
+      setLogs([]);
       return;
     }
 
@@ -66,58 +64,118 @@ export default function AnimalLoggerScreen() {
   const combinedLogs = user ? logs : tempLogs;
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={{ flex: 1 }}
+    <ImageBackground
+      source={require('../assets/images/Forest.jpg')}
+      style={styles.background}
+      imageStyle={{ opacity: 0.3 }}
     >
-      <TouchableWithoutFeedback onClick={Keyboard.dismiss}>
-        <View style={styles.container}>
-          <Text style={styles.title}>Animal Logger</Text>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={{ flex: 1 }}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.container}>
+            <Text style={styles.title}>🐾 Animal Logger</Text>
 
-          <TextInput
-            value={animal}
-            onChangeText={setAnimal}
-            placeholder="Enter animal name"
-            style={styles.input}
-          />
-          <Button title="Log Animal" onPress={handleLog} />
+            <TextInput
+              value={animal}
+              onChangeText={setAnimal}
+              placeholder="Enter animal name"
+              style={styles.input}
+              placeholderTextColor="#888"
+            />
 
-          <FlatList
-            data={combinedLogs}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <Text style={styles.item}>• {item.name}</Text>
-            )}
-            ListEmptyComponent={<Text style={styles.placeholder}>No animals logged yet.</Text>}
-            contentContainerStyle={{ paddingBottom: 100 }}
-          />
-
-          {/* ✅ Always render the login button if not logged in */}
-          {!user && (
-            <TouchableOpacity
-              style={styles.loginButton}
-              onPress={() => router.push('/login')}
-            >
-              <Text style={styles.loginButtonText}>Login to Save</Text>
+            <TouchableOpacity style={styles.button} onPress={handleLog}>
+              <Text style={styles.buttonText}>Log Animal</Text>
             </TouchableOpacity>
-          )}
-        </View>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+
+            <FlatList
+              data={combinedLogs}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => (
+                <Text style={styles.item}>• {item.name}</Text>
+              )}
+              ListEmptyComponent={
+                <Text style={styles.placeholder}>No animals logged yet.</Text>
+              }
+              contentContainerStyle={{ paddingBottom: 100 }}
+            />
+
+            {!user && (
+              <TouchableOpacity
+                style={styles.loginButton}
+                onPress={() => router.push('/login')}
+              >
+                <Text style={styles.loginButtonText}>Login to Save</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, justifyContent: 'flex-start' },
-  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 20 },
-  input: {
-    borderBottomWidth: 1,
-    marginBottom: 10,
-    padding: 10,
-    backgroundColor: '#fff', // ensure it's not transparent
+  background: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
   },
-  item: { fontSize: 18, paddingVertical: 4 },
-  placeholder: { textAlign: 'center', marginTop: 20, fontStyle: 'italic', color: 'gray' },
+  container: {
+    flex: 1,
+    padding: 20,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#e9edc9',
+    marginBottom: 25,
+    textAlign: 'center',
+    textShadowColor: 'rgba(0, 0, 0, 0.6)',
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 4,
+  },
+  input: {
+    width: '100%',
+    borderRadius: 8,
+    padding: 12,
+    backgroundColor: '#fff',
+    marginBottom: 10,
+    fontSize: 16,
+  },
+  button: {
+    backgroundColor: '#31572c',
+    paddingVertical: 14,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginVertical: 8,
+    width: '100%',
+    shadowColor: '#000',
+    shadowOpacity: 0.3,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 6,
+    elevation: 4,
+  },
+  buttonText: {
+    color: '#fefae0',
+    fontSize: 16,
+    textAlign: 'center',
+    fontWeight: '600',
+  },
+  item: {
+    fontSize: 18,
+    color: '#fff',
+    paddingVertical: 4,
+  },
+  placeholder: {
+    textAlign: 'center',
+    marginTop: 20,
+    fontStyle: 'italic',
+    color: '#228B22',
+  },
   loginButton: {
     position: 'absolute',
     bottom: 30,
@@ -133,4 +191,3 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
-

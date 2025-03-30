@@ -2,6 +2,7 @@ import { Tabs, useRouter, useSegments } from 'expo-router';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebaseconfig';
 import { useEffect, useState } from 'react';
+import CustomTabBar from '../components/CustomTabBar';
 
 export default function RootLayout() {
   const router = useRouter();
@@ -32,19 +33,17 @@ export default function RootLayout() {
     
   }, [checkingAuth, user, segments]);
 
-  if (checkingAuth) return null; // or show loading indicator
+  if (checkingAuth) return null; 
 
   return (
-    <Tabs>
-      <Tabs.Screen name="home" options={{ title: 'Home' }} />
-      <Tabs.Screen name="animallogger" options={{ title: 'Animal Logger' }} />
-      <Tabs.Screen name="firstaid" options={{ title: 'First Aid' }} />
-      <Tabs.Screen name="survivortips" options={{ title: 'Survivor Tips' }} />
-      <Tabs.Screen name="compass" options={{ title: 'Compass' }} />
-      <Tabs.Screen name="settings" options={{ title: 'Settings' }} />
-      <Tabs.Screen name="loggin" options={{ title: 'Log in' }} />
+    <Tabs tabBar={(props) => <CustomTabBar {...props} />}>
+       <Tabs.Screen name="survivortips" options={{ title: "Tips" }} />
+      <Tabs.Screen name="compass" options={{ title: "Compass" }} />
+    
+      <Tabs.Screen name="game" options = {{ tabBarItemStyle: {display: 'none'}}} />
+      <Tabs.Screen name="animallogger" options={{ title: "Animal Log" }} />
 
-      <Tabs.Screen name="signup" options={{ tabBarItemStyle: {display: 'none'}}} />
+      <Tabs.Screen name="login" options={{ title: "Log-in" }} />
 
     </Tabs>
   );

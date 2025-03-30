@@ -20,6 +20,7 @@ export default function Layout() {
 />
       <Tabs.Screen name="compass" options={{ title: 'Compass' }} />
       <Tabs.Screen name="settings" options={{ title: 'Settings' }} />
+      <Tabs.Screen name="animallogger" options={{ title: 'Animal Logger' }} />
     </Tabs>
   );
 }
